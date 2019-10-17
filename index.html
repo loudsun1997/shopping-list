@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shopping List</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+  </head>
+  <body>
+    <div class="container center">
+      <h1 class="center title">Shopping List</h1>
+      <div class="flow-right controls">
+        <span>count of items to buy: <span id="to-buy-count">0</span></span>
+        <br>
+        <span>count of items bought: <span id="bought-count">0</span></span>
+      </div>
+      <button class="button center" onClick="addItemToBuy()">Add New Item</button>
+      <ul id="item-list" class="item-list"></ul>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>

@@ -59,15 +59,43 @@ function updateCount(){
 }
 
 
+function addNewAgeGroup(value){
+	
+	let newLabel = document.createElement('label');
+	newLabel.innerHTML = `${value}` + '<br>';
+	
+	let newButton = document.createElement('input');
+	newButton.id = `${value}`;
+	newButton.type = "button";
+	newButton.name = `${value}`;
+	newButton.value = "Delete";
+	newLabel.prepend(newButton); 
+
+	let newCheckBox = document.createElement('input');
+	newCheckBox.id = `${value}`;
+	newCheckBox.type = "checkbox";
+	newCheckBox.name = `${value}`;
+	newLabel.prepend(newCheckBox); 
+	
+	document.getElementById("item-list").appendChild(newLabel);	
+	
+	var node = document.createElement("LI");
+	var textnode = document.createTextNode("Water");
+	node.appendChild(textnode);
+	document.getElementById("item-list").appendChild(node);
+}
+
 function addItemToBuy() {
-  //alert('New To-buy Item button clicked!');
+  alert('New To-buy Item button clicked!');
   let itemName = prompt('Please enter the name of the item.');  
+
   toBuyCount++;
   listOfItem.push(itemName)
   let uniqueSet = new Set(listOfItem)
   listOfItem = [...uniqueSet]
   //list.innerHTML = listOfItem;
-  showList();
+  //showList();
+  addNewAgeGroup(listOfItem[listOfItem.length-1])
   updateCount()
   alert(toBuyCount)
 }

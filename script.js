@@ -70,13 +70,16 @@ function removeThisLine(){
 	buttonStatus = document.getElementById(this.id).firstElementChild.checked
 	alert(document.getElementById(this.id).firstElementChild.checked)
 	
+	valueToGetRidOf = this.id
+    listOfItem = listOfItem.filter(removeItemInArrayCallBack)
+	
 	if(buttonStatus)
 	{
-		toBuyCount--
 		updateCount1()
 		document.getElementById("item-list").removeChild(document.getElementById(this.id))
 	}
 	else{
+		toBuyCount--
 		document.getElementById("item-list").removeChild(document.getElementById(this.id))
 		updateCount1()
 	}

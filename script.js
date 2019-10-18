@@ -12,92 +12,46 @@ let valueToGetRidOf = null
 let text;
 
 
-function showList(){
-	text = "<ul>";
-	listOfItem.forEach(addLine);
-	text += "</ul>";
-	document.getElementById("item-list").innerHTML = text;
+function updateCount(){  
+	boughtCount = listOfItem.length - toBuyCount
+	document.getElementById('to-buy-count').innerHTML = toBuyCount
+	document.getElementById('bought-count').innerHTML = boughtCount
 }
-
-
-function addLine(value) {
-	text += '<li><input type="checkbox" onClick=updateCount()><button onClick=removeItem(\'' + value + '\')>X</button>' + value + "</li>";
-} 
-
-
-function removeItem(value){
-    valueToGetRidOf = value
-    listOfItem = listOfItem.filter(removeItemInArrayCallBack)
-	updateCount()
-    showList()
-	updateCount()
-	showList()
-}
-
 
 function removeItemInArrayCallBack(value)
 {
 	return !(value == valueToGetRidOf)
 }
 
-
-function updateCount(){
-    let checkboxes = document.getElementsByTagName("input"),
-    count = 0;
-    for (var i=0; i<checkboxes.length; i++) {       
-        if (checkboxes[i].type == "checkbox" && checkboxes[i].checked == true) 
-        {
-        count++;
-        }
-    }
-	
-  boughtCount = count
-  document.getElementById('bought-count').innerHTML = boughtCount
-  
-  toBuyCount = checkboxes.length - boughtCount
-  document.getElementById('to-buy-count').innerHTML = toBuyCount
-
-}
-
-function updateCount1(){  
-  boughtCount = listOfItem.length - toBuyCount
-  document.getElementById('to-buy-count').innerHTML = toBuyCount
-  document.getElementById('bought-count').innerHTML = boughtCount
-}
-
-
 function removeThisLine(){
 	buttonStatus = document.getElementById(this.id).firstElementChild.checked
-	alert(document.getElementById(this.id).firstElementChild.checked)
+	//alert(document.getElementById(this.id).firstElementChild.checked)
 	
 	valueToGetRidOf = this.id
     listOfItem = listOfItem.filter(removeItemInArrayCallBack)
-	
+
 	if(buttonStatus)
 	{
-		updateCount1()
+		updateCount()
 		document.getElementById("item-list").removeChild(document.getElementById(this.id))
 	}
 	else{
 		toBuyCount--
 		document.getElementById("item-list").removeChild(document.getElementById(this.id))
-		updateCount1()
+		updateCount()
 	}
-
-	
-
 }
 
 function buyItem(){
 	if(this.checked)
 	{
 		toBuyCount--
-		updateCount1()
+		updateCount()
 	}
 	else if(!this.checked)
 	{
 		toBuyCount++
-		updateCount1()
+		updateCount()
 	}
 }
 
@@ -126,7 +80,7 @@ function addHtml(value){
 	document.getElementById("item-list").appendChild(newLabel);	
 	totalCount++
 	toBuyCount++
-	updateCount1()
+	updateCount()
 }
 
 function addItemToBuy() {
@@ -137,5 +91,5 @@ function addItemToBuy() {
 	listOfItem = [...uniqueSet]
 
 	addHtml(listOfItem[listOfItem.length-1])
-	alert(toBuyCount)
+	//alert(toBuyCount)
 }

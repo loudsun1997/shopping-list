@@ -5,6 +5,7 @@ const boughtCountSpan = document.getElementById('bought-count');
 
 let toBuyCount = 0;
 let boughtCount = 0;
+let totalCount = 0;
 let listOfItem = [];
 
 let valueToGetRidOf = null
@@ -58,10 +59,50 @@ function updateCount(){
 
 }
 
+function updateCount1(){  
+  boughtCount = listOfItem.length - toBuyCount
+  document.getElementById('to-buy-count').innerHTML = toBuyCount
+  document.getElementById('bought-count').innerHTML = boughtCount
+}
 
-function addNewAgeGroup(value){
+
+function removeThisLine(){
+	buttonStatus = document.getElementById(this.id).firstElementChild.checked
+	alert(document.getElementById(this.id).firstElementChild.checked)
+	
+	if(buttonStatus)
+	{
+		toBuyCount--
+		updateCount1()
+		document.getElementById("item-list").removeChild(document.getElementById(this.id))
+	}
+	else{
+		document.getElementById("item-list").removeChild(document.getElementById(this.id))
+		updateCount1()
+	}
+
+	
+
+}
+
+function buyItem(){
+	if(this.checked)
+	{
+		toBuyCount--
+		updateCount1()
+	}
+	else if(!this.checked)
+	{
+		toBuyCount++
+		updateCount1()
+	}
+}
+
+
+function addHtml(value){
 	
 	let newLabel = document.createElement('label');
+	newLabel.id = value
 	newLabel.innerHTML = `${value}` + '<br>';
 	
 	let newButton = document.createElement('input');
@@ -69,33 +110,29 @@ function addNewAgeGroup(value){
 	newButton.type = "button";
 	newButton.name = `${value}`;
 	newButton.value = "Delete";
+	newButton.onclick = removeThisLine.bind(newLabel)
 	newLabel.prepend(newButton); 
 
 	let newCheckBox = document.createElement('input');
 	newCheckBox.id = `${value}`;
 	newCheckBox.type = "checkbox";
 	newCheckBox.name = `${value}`;
+	newCheckBox.onchange = buyItem.bind(newCheckBox)
 	newLabel.prepend(newCheckBox); 
 	
 	document.getElementById("item-list").appendChild(newLabel);	
-	
-	var node = document.createElement("LI");
-	var textnode = document.createTextNode("Water");
-	node.appendChild(textnode);
-	document.getElementById("item-list").appendChild(node);
+	totalCount++
+	toBuyCount++
+	updateCount1()
 }
 
 function addItemToBuy() {
-  alert('New To-buy Item button clicked!');
-  let itemName = prompt('Please enter the name of the item.');  
+	let itemName = prompt('Please enter the name of the item.');  
 
-  toBuyCount++;
-  listOfItem.push(itemName)
-  let uniqueSet = new Set(listOfItem)
-  listOfItem = [...uniqueSet]
-  //list.innerHTML = listOfItem;
-  //showList();
-  addNewAgeGroup(listOfItem[listOfItem.length-1])
-  updateCount()
-  alert(toBuyCount)
+	listOfItem.push(itemName)
+	let uniqueSet = new Set(listOfItem)
+	listOfItem = [...uniqueSet]
+
+	addHtml(listOfItem[listOfItem.length-1])
+	alert(toBuyCount)
 }
